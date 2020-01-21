@@ -19,29 +19,32 @@ class DataLoader:
 
         if self.loadMethod == 'CSV':
             csvFilePath = os.path.join(BASE_DIR, DataaggregatorConfig.DATA_LOAD_CSV_PARAMS['PATH'])
+            try:
 
-            with codecs.open(csvFilePath, encoding='utf-8') as csvfile:
-                buffer = csv.reader(csvfile)
-                headers = next(buffer)
-                i = 0
-                for row in buffer:
-                    if i >= maxRecords and maxRecords != -1:
-                        break
-                    else:
-                        currentCoach = dict(zip(headers, row))
-                        result.append(Coach(
-                            id=currentCoach['ID'],
-                            firstName=currentCoach['Name'],
-                            lastName=currentCoach['LastName'],
-                            secondName=currentCoach['MiddleName'],
-                            gender=currentCoach['Gender'],
-                            birthDate=currentCoach['DateOfBirth'],
-                            sport=currentCoach['SportName'],
-                            seniorityPeriod=currentCoach['SeniorityPeriod'],
-                            citizenship=currentCoach['Citizenship'],
-                            publicPhone=currentCoach['PublicPhone'],
-                            email=currentCoach['Email'],
-                            jobInfo=currentCoach['JobOrganizationName']
-                        ))
-                        i += 1
+                with codecs.open(csvFilePath, encoding='utf-8') as csvfile:
+                    buffer = csv.reader(csvfile)
+                    headers = next(buffer)
+                    i = 0
+                    for row in buffer:
+                        if i >= maxRecords and maxRecords != -1:
+                            break
+                        else:
+                            currentCoach = dict(zip(headers, row))
+                            result.append(Coach(
+                                id=currentCoach['ID'],
+                                firstName=currentCoach['Name'],
+                                lastName=currentCoach['LastName'],
+                                secondName=currentCoach['MiddleName'],
+                                gender=currentCoach['Gender'],
+                                birthDate=currentCoach['DateOfBirth'],
+                                sport=currentCoach['SportName'],
+                                seniorityPeriod=currentCoach['SeniorityPeriod'],
+                                citizenship=currentCoach['Citizenship'],
+                                publicPhone=currentCoach['PublicPhone'],
+                                email=currentCoach['Email'],
+                                jobInfo=currentCoach['JobOrganizationName']
+                            ))
+                            i += 1
+            except FileNotFoundError:
+                print("Unable to load CSV file in repository. Check AppSettings for the correct path")
         return result
