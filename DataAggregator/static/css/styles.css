@@ -7,3 +7,7 @@
 body{
     min-height: 100vh;
 }
+
+.text-size-up{
+    font-size: 1.2em;
+}
