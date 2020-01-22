@@ -1,7 +1,7 @@
 {% block navbar %}
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" href="/">НайдиТренера.ру</a>
-        <ul class="navbar-nav text-right">
+        <ul class="navbar-nav text-right ml-auto">
             <li class="nav-item">
                 <a class="nav-link ml-3 mr-3 {% if template_name == 'coaches' %} active {% endif %}" href="/coaches">Список тренеров</a>
             </li>
@@ -9,7 +9,10 @@
                 <a class="nav-link" href="/about">О нас</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ml-3 disabled" href="#">Disabled</a>
+                <form class="form-inline" method="post" action="/search">{% csrf_token %}
+                    <input class="form-control mr-sm-2" type="text" placeholder="Поиск по полям" name="queryString">
+                    <button class="btn btn-success" type="submit">Найти</button>
+                  </form>
             </li>
         </ul>
     </nav>

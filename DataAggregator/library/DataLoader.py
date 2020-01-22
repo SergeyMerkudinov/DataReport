@@ -17,7 +17,7 @@ class DataLoader:
     def __init__(self, configObject):
         self.loadMethod = configObject.DATA_LOAD_METHOD
 
-    def extract(self, maxRecords=-1):
+    def extract(self, maxRecords=-1, query=''):
         result = list()
 
         if self.loadMethod == 'CSV':
@@ -33,19 +33,20 @@ class DataLoader:
                             break
                         else:
                             currentCoach = dict(zip(headers, row))
-                            result.append(Coach(
-                                id=currentCoach['ID'],
-                                firstName=currentCoach['Name'],
-                                lastName=currentCoach['LastName'],
-                                secondName=currentCoach['MiddleName'],
-                                gender=currentCoach['Gender'],
-                                birthDate=currentCoach['DateOfBirth'],
-                                sport=currentCoach['SportName'],
-                                seniorityPeriod=currentCoach['SeniorityPeriod'],
-                                citizenship=currentCoach['Citizenship'],
-                                publicPhone=currentCoach['PublicPhone'],
-                                email=currentCoach['Email'],
-                                jobInfo=currentCoach['JobOrganizationName']
+                            if query == '' or query in currentCoach.values():
+                                result.append(Coach(
+                                    id=currentCoach['ID'],
+                                    firstName=currentCoach['Name'],
+                                    lastName=currentCoach['LastName'],
+                                    secondName=currentCoach['MiddleName'],
+                                    gender=currentCoach['Gender'],
+                                    birthDate=currentCoach['DateOfBirth'],
+                                    sport=currentCoach['SportName'],
+                                    seniorityPeriod=currentCoach['SeniorityPeriod'],
+                                    citizenship=currentCoach['Citizenship'],
+                                    publicPhone=currentCoach['PublicPhone'],
+                                    email=currentCoach['Email'],
+                                    jobInfo=currentCoach['JobOrganizationName']
                             ))
                             i += 1
             except FileNotFoundError:
@@ -70,7 +71,8 @@ class DataLoader:
                         citizenship=currentCoach['Cells']['Citizenship'][0]['Citizenship'],
                         publicPhone=currentCoach['Cells']['PublicPhone'][0]['PublicPhone'],
                         email=currentCoach['Cells']['Email'][0]['Email'],
-                        jobInfo=currentCoach['Cells']['JobOrganisation'][0]['JobOrganizationName']
+                        jobInfo=currentCoach['Cells']['JobOrganisation'][0]['JobOrganizationName'],
+                        globalId=currentCoach['global_id']
                     ))
 
             except URLError:

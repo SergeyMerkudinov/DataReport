@@ -1,3 +1,7 @@
+import urllib.parse
+from urllib.parse import parse_qs
+
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -17,3 +21,8 @@ def about(request):
 
 def coaches(request):
     return render(request, 'coaches.html', {'template_name': 'coaches', 'coachList': DataLoader(DataaggregatorConfig).extract(maxRecords=DataaggregatorConfig.DATA_LOAD_MAX_RECORDS)})
+
+def filteredCoaches(request):
+    body_unicode = request.body.decode('utf-8')
+    body = parse_qs(body_unicode)
+    return render(request, 'coaches.html', {'template_name': 'coaches', 'coachList': DataLoader(DataaggregatorConfig).extract(query=body['queryString'][0])})
