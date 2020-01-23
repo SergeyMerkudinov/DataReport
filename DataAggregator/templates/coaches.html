@@ -22,7 +22,7 @@
                             <tbody>
                                 {% for foo in coachList %}
                                     <tr>
-                                        <th scope="row">{{ foo.id }}</th>
+                                        <th scope="row"><a href="https://www.mos.ru/coachregister/Coach/Card/{{ foo.id }}">{{ foo.id }}</a></th>
                                         <td>{{ foo.lastName }}</td>
                                         <td>{{ foo.firstName }}</td>
                                         <td>{{ foo.secondName }}</td>
